@@ -43,10 +43,11 @@ void Change(int** p, int n)
 	for (i = 0; i < n; i++)
 		for (j = 0 ; j < n; j++)
 		{
-			if (max < p[i][j])
+			if (max <= p[i][j])
 			{
 				k = i;
 				g = j;
+				max = p[i][j];
 			}
 		}
 
@@ -62,16 +63,18 @@ void Change(int** p, int n)
 			g--;
 		}
 	else
-		while (g != n / 2+2 )
+		if (g<n/2)
+		while (g != n / 2 + 1 )
 		{
-			for (i = 0; i < n - 1; i++)
+			for (i = 1; i < n; i++)
 			{
 				buf = p[k][i];
-				p[k][i] = p[k][i - 1];
-				p[k][i - 1] = buf;
+				p[k][i] = p[k][i-1];
+				p[k][i-1] = buf;
 			}
 			g++;
 		}
+	g = n / 2;
 
 	if (k > n / 2 )
 	{
@@ -86,16 +89,18 @@ void Change(int** p, int n)
 			k--;
 		}
 	}
-	else while (k != n / 2 )
-	{
-		for (i = n; i > 1; i++)
-		{
-			buf = p[i][g];
-			p[i][g] = p[i - 1][g];
-			p[i - 1][g] = buf;
-		}
-		k++;
-	}
+	else 
+		if (k < n / 2)
+			while (k != n / 2 + 1)
+			{
+				for (i = 1; i < n; i++)
+				{
+					buf = p[i][g];
+					p[i][g] = p[i - 1][g];
+					p[i - 1][g] = buf;
+				}
+				k++;
+			}
 
 	
 }
